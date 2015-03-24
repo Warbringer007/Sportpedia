@@ -17,15 +17,18 @@ namespace Database
         [Key]
         public int ID { get; set; }
         [Required]
-        public string username { get; set; }
+        public string Username { get; set; }
         [Required]
-        public string password { get; set; }
-        public string email { get; set; }
+        public string Password { get; set; }
+        public string Email { get; set; }
         [Required]
-        public Permission permissions { get; set; }
-        public string name { get; set; }
-        public string surname { get; set; }
-        public DateTime date_of_birth { get; set; }
+        public Permission Permissions { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public DateTime Date_of_birth { get; set; }
+        public virtual List<League> Leagues { get; set; }
+        public virtual List<Team> Teams { get; set; }
+        public virtual List<Match_Information> Match_Informations { get; set; }
     }
     
 }
