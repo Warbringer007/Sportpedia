@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Database
+namespace EFDatabase
 {
     public class Match
     {
@@ -14,9 +14,9 @@ namespace Database
         public int ID { get; set; }
         [Required]
         public virtual League League { get; set; }
-        [Required, InverseProperty("Home_Team")]
+        [Required, InverseProperty("Home_Matches")]
         public virtual Team Home_Team { get; set; }
-        [Required, InverseProperty("Away_Team")]
+        [Required, InverseProperty("Away_Matches")]
         public virtual Team Away_Team { get; set; }
         [Required]
         public bool Locked { get; set; }

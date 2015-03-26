@@ -7,8 +7,8 @@
     <ProjectGuid>{2190DE69-D810-491D-A5A9-64977B1800DB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Database</RootNamespace>
-    <AssemblyName>Database</AssemblyName>
+    <RootNamespace>EFDatabase</RootNamespace>
+    <AssemblyName>EFDatabase</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -51,6 +51,15 @@
     <Compile Include="League_contestants.cs" />
     <Compile Include="Match.cs" />
     <Compile Include="Match_Information.cs" />
+    <Compile Include="Migrations\201503251551030_InitialCreate.cs" />
+    <Compile Include="Migrations\201503251551030_InitialCreate.Designer.cs">
+      <DependentUpon>201503251551030_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503261652591_TeamComment.cs" />
+    <Compile Include="Migrations\201503261652591_TeamComment.Designer.cs">
+      <DependentUpon>201503261652591_TeamComment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Team.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,6 +68,14 @@
     <None Include="App.config" />
     <None Include="Documents\Baza podataka završni.vsdx" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201503251551030_InitialCreate.resx">
+      <DependentUpon>201503251551030_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503261652591_TeamComment.resx">
+      <DependentUpon>201503261652591_TeamComment.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

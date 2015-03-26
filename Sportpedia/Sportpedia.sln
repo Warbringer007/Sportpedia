@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{2190DE69-D810-491D-A5A9-64977B1800DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFDatabase", "Database\EFDatabase.csproj", "{2190DE69-D810-491D-A5A9-64977B1800DB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{83BEB947-94D2-413F-9152-01F33AAD21BF}"
 EndProject

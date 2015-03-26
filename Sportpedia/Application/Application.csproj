@@ -160,9 +160,9 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Database\Database.csproj">
+    <ProjectReference Include="..\Database\EFDatabase.csproj">
       <Project>{2190de69-d810-491d-a5a9-64977b1800db}</Project>
-      <Name>Database</Name>
+      <Name>EFDatabase</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

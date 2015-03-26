@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
-namespace Database
+namespace EFDatabase
 {
     public class League_contestants
     {

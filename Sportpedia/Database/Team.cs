@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Database
+namespace EFDatabase
 {
     public class Team
     {
@@ -19,12 +19,15 @@ namespace Database
         [Required]
         public string Country { get; set; }
         public string Fans_Name { get; set; }
+        public string Stadium { get; set; }
         public byte[] Emblem { get; set; }
+        public string Comment { get; set; }
         [Required]
         public virtual User Last_contributor { get; set; }
         [InverseProperty("Home_Team")]
-        public virtual List<Match> Home_Team { get; set; }
+        public virtual List<Match> Home_Matches { get; set; }
         [InverseProperty("Away_Team")]
-        public virtual List<Match> Away_Team { get; set; }
+        public virtual List<Match> Away_Matches { get; set; }
+        public virtual List<League_contestants> Competitions { get; set; }
     }
 }
