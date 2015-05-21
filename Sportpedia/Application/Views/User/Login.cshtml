@@ -1,0 +1,89 @@
+﻿@model EFDatabase.User
+
+@{
+    ViewBag.Title = "Login Page";
+}
+
+<style>
+    .logo {
+        font-size: 45px;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px #000000;
+    }
+</style>
+
+@using (Html.BeginForm("Login", "User", FormMethod.Post))
+{
+@Html.AntiForgeryToken();
+<div>
+    <p class="logo">
+        <span style="color: deepskyblue">S</span><span style="color: yellow">P</span><span style="color: black">O</span><span style="color: forestgreen">R</span><span style="color: red">T</span>PEDIA
+    </p>
+</div>
+<div class="container col-md-5 form-group">
+    <h1>PRIJAVA NA SUSTAV</h1>
+    <form role="form">
+        <table class="table-responsive col-md-9 table-hover table-condensed">
+            <tr>
+                <td colspan="2" style="color:red; font-weight:bold">@TempData["Logingreska"]</td>
+            </tr>
+            <tr>
+                <td class="col-md-6">Korisničko ime:</td>
+                <td>@Html.TextBoxFor(m => m.Username, new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td class="col-md-6">Lozinka:</td>
+                <td>@Html.PasswordFor(m => m.Password, new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td><button type="submit" class="btn btn-default" value="Spremi" />Prijavite se</td>
+            </tr>
+        </table>
+    </form>
+</div>
+}
+
+@using (Html.BeginForm("Registration", "User", FormMethod.Post))
+{
+@Html.AntiForgeryToken();
+<div class="container col-md-7">
+    <header>
+        <h1>REGISTRIRAJTE SE</h1>
+        <h2>Za potpuni pristup stranici morate se registrirati</h2>
+    </header>
+    <form role="form">
+        <table class="table-responsive col-md-8 table-hover table-condensed">
+            <tr>
+                <td colspan="2" style="color:red; font-weight:bold">@TempData["Regisgreska"]</td>
+            </tr>
+            <tr>
+                <td class="col-md-5">Korisničko ime:</td>
+                <td>@Html.TextBoxFor(m => m.Username, new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td class="col-md-5">Lozinka:</td>
+                <td>@Html.PasswordFor(m => m.Password, new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td class="col-md-5">Email:</td>
+                <td>@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td class="col-md-5">Ime:</td>
+                <td>@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td class="col-md-5">Prezime:</td>
+                <td>@Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })</td>
+            </tr>
+            <tr>
+                <td class="col-md-5">Datum rođenja:</td>
+                <td>@Html.TextBoxFor(m => m.Date_of_birth, new { @class = "form-control datepicker" })</td>
+            </tr>
+            <tr>
+                <td><button type="submit" class="btn btn-default" value="Registracija" />Registrirajte se</td>
+            </tr>
+        </table>
+    </form>
+</div>
+}

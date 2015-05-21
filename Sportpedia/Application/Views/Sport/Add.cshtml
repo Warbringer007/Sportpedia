@@ -1,0 +1,48 @@
+﻿@model Application.Models.SingleSportModel
+@{
+    ViewBag.Title = "Dodavanje sporta";
+}
+
+<h2>Podaci o novom sportu:</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <div class="container">
+        <form role="form">
+            <table class="table-responsive col-md-12 table-hover table-condensed" style="margin-bottom:5px">
+                <tr>
+                    <td colspan="2" style="color:red; font-weight:bold">@TempData["Greska"]</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Ime sporta:</td>
+                    <td>@Html.TextBoxFor(m => m.Sport.Name, new { @class = "form-control" })</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Tip sporta:</td>
+                    <td>@Html.DropDownListFor(m => m.Sport.Sport_type.ID, ((System.ComponentModel.BindingList<EFDatabase.Sport_type>) ViewBag.Tipovi).OrderBy(d => d.Type_name).Select(d => new SelectListItem {Text = d.Type_name, Value = d.ID.ToString()}), new {@class = "form-control"})</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2" style="font-size: large; font-weight: bold">Svi eventi:</td>
+                </tr>
+                @for (int i = 0; i < Model.Eventi.Count; i++)
+                {
+                    @:
+                    <tr>
+                        @Html.HiddenFor(m => m.Eventi[i].Event)
+                        <td class="col-md-2">@Html.DisplayTextFor(m => m.Eventi[i].Event)</td>
+                        <td>@Html.CheckBoxFor(m => m.Eventi[i].Checked)</td>
+                    </tr>
+                }
+                <tr>
+                    <td class="col-md-2">Dodaj novi event:</td>
+                    <td><a class="btn btn-default" href="/Event/Add">Novi event</a></td>
+                </tr>
+                <tr>
+                    <td class="col-md-2" style="vertical-align: top;">Dodatne informacije o sportu:</td>
+                    <td class="col-md-10" colspan="2">@Html.TextAreaFor(m => m.Comment, new { @class = "form-control", @style = "max-width:500px; height:250px" })</td>
+                </tr>
+            </table>
+            <button type="submit" class="btn btn-default">Dodaj novi sport</button>
+        </form>
+    </div>
+}

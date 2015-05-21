@@ -1,0 +1,37 @@
+﻿@model Application.Models.UserViewModel
+
+@{
+    ViewBag.Title = "Korisnički račun";
+}
+
+<h2>Podaci o korisničkom računu:</h2>
+<div class="container">
+    <table class="table-responsive col-md-12 table-hover table-condensed" style="margin-bottom:5px">
+        <tr>
+            <td class="col-md-3">Korisničko ime:</td>
+            <td>@Model.Username</td>
+        </tr>
+        <tr>
+            <td class="col-md-3">Ime:</td>
+            <td>@Model.Name</td>
+        </tr>
+        <tr>
+            <td class="col-md-3">Prezime:</td>
+            <td>@Model.Surname</td>
+        </tr>
+        <tr>
+            <td class="col-md-3">Email:</td>
+            <td>@Model.Email</td>
+        </tr>
+        <tr>
+            <td class="col-md-3">Datum rođenja:</td>
+            <td>@Model.Date_of_birth.ToShortDateString()</td>
+        </tr>
+        <tr>
+            <td class="col-md-3">Razina prava:</td>
+            <td>@Model.Permissions</td>
+        </tr>
+    </table>
+    <a>@Html.ActionLink("Uredi podatke", "Edit", "User", new {@class = "btn btn-default" })</a>
+</div>
+

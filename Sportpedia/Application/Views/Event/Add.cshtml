@@ -1,0 +1,105 @@
+﻿@model EFDatabase.Event_list
+
+@{
+    ViewBag.Title = "Dodaj novi event";
+}
+
+<h2>Podaci o novom eventu:</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    <div class="container">
+        <form role="form">
+            <table class="table-responsive col-md-12 table-hover table-condensed" style="margin-bottom: 5px">
+                <tr>
+                    <td colspan="2" style="color: red; font-weight: bold">@TempData["Greska"]</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Ime eventa:</td>
+                    <td colspan="2">@Html.TextBoxFor(m => m.Name, new {@class = "form-control"})</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2" style="font-size: large; font-weight: bold">Postavke eventa:</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Primarni event:</td>
+                    <td class="col-md-1">@Html.CheckBoxFor(m => m.Primary, new { @onclick = "OnChangeCheckbox (this)" })</td>
+                    <td style="font-size: small">Event je primaran ako se bodovi zapisani u njemu računaju u sveukupan rezultat nekog sportskog događaja.</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Igrač 1:</td>
+                    <td class="col-md-1">@Html.CheckBoxFor(m => m.Player1, new { @onclick = "OnChangeCheckbox (this)" })</td>
+                    <td style="font-size: small">Za event je bitan jedan igrač. Primjer: igrač koji je zabio pogodak.</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Igrač 2:</td>
+                    <td class="col-md-1">@Html.CheckBoxFor(m => m.Player2, new { @onclick = "OnChangeCheckbox (this)" })</td>
+                    <td style="font-size: small">Za event je bitan i drugi igrač. Primjer: Davis cup natjecanje.</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Bodovi 1:</td>
+                    <td class="col-md-1">@Html.CheckBoxFor(m => m.Points1, new { disabled = "disabled", @onclick = "OnChangeCheckbox (this)" })</td>
+                    <td style="font-size: small">Bodovi koje je ostvario prvi igrač ili ekipa.</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Bodovi 2:</td>
+                    <td class="col-md-1">@Html.CheckBoxFor(m => m.Points2, new { disabled = "disabled", @onclick = "OnChangeCheckbox (this)" })</td>
+                    <td style="font-size: small">Bodovi koje je ostvario drugi igrač ili ekipa.</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Zbraja se normalno:</td>
+                    <td class="col-md-1">@Html.CheckBoxFor(m => m.Counts, new { disabled = "disabled", @onclick = "OnChangeCheckbox (this)" })</td>
+                    <td style="font-size: small">Bodovi se mogu zbrajati na normalan način ( nogomet, rukomet ), ili kao set bodovi ( tenis, odbojka ).</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Komentar:</td>
+                    <td class="col-md-1">@Html.CheckBoxFor(m => m.Length, new { @onclick = "OnChangeCheckbox (this)" })</td>
+                    <td style="font-size: small">Komentar za pojedini event.</td>
+                </tr>
+            </table>
+            <button type="submit" class="btn btn-default">Dodaj novi event</button>
+        </form>
+    </div>
+}
+
+<script type="text/javascript">
+    function OnChangeCheckbox(checkbox) {
+        if (checkbox.checked) {
+            if (checkbox.id === "Primary") {
+                document.getElementById("Player1").checked = false;
+                document.getElementById("Player2").checked = false;
+                document.getElementById("Player2").disabled = true;
+                document.getElementById("Points1").checked = true;
+                document.getElementById("Points2").checked = true;
+                document.getElementById("Counts").disabled = false;
+            }
+            if (checkbox.id === "Player1" && document.getElementById("Primary").checked === true) {
+                document.getElementById("Player2").disabled = false;
+                document.getElementById("Points2").checked = false;
+            }
+            if (checkbox.id === "Player2" && document.getElementById("Primary").checked === true) {
+                document.getElementById("Points2").checked = true;
+            }
+        }
+        else {
+            if (checkbox.id === "Primary") {
+                document.getElementById("Player1").checked = false;
+                document.getElementById("Player2").checked = false;
+                document.getElementById("Player2").disabled = false;
+                document.getElementById("Points1").checked = false;
+                document.getElementById("Points2").checked = false;
+                document.getElementById("Counts").checked = false;
+                document.getElementById("Counts").disabled = true;
+            }
+            if (checkbox.id === "Player1" && document.getElementById("Primary").checked === true) {
+                document.getElementById("Player2").checked = false;
+                document.getElementById("Player2").disabled = true;
+                document.getElementById("Points2").checked = true;
+            }
+            if (checkbox.id === "Player2" && document.getElementById("Primary").checked === true) {
+                document.getElementById("Points2").checked = false;
+            }
+        }
+    }
+</script>
+

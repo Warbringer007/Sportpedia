@@ -13,15 +13,13 @@ namespace EFDatabase
         [Key]
         public int ID { get; set; }
         [Required]
-        public virtual League League { get; set; }
-        [Required, InverseProperty("Home_Matches")]
-        public virtual Team Home_Team { get; set; }
-        [Required, InverseProperty("Away_Matches")]
-        public virtual Team Away_Team { get; set; }
+        public virtual Competition League { get; set; }
+        public virtual List<Match_contestant> Match_contestants { get; set; }
         [Required]
         public bool Locked { get; set; }
-        public virtual Match_Information Current_Match_Information { get; set; }
-        [InverseProperty("Match")]
-        public virtual List<Match_Information> Match_Informations { get; set; }
+        [Required]
+        public DateTime Date { get; set; }
+        public virtual List<Match_comment> Match_comments { get; set; }
+        public virtual List<Event> Events { get; set; }
     }
 }

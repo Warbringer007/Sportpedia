@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace EFDatabase
 {
-    public class Team
+    [Table("Teams")]
+    public class Team : Contestant
     {
-        [Key]
-        public int ID { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
@@ -21,13 +20,11 @@ namespace EFDatabase
         public string Fans_Name { get; set; }
         public string Stadium { get; set; }
         public byte[] Emblem { get; set; }
-        public string Comment { get; set; }
+        public virtual List<Team_comment> Team_comments { get; set; }
         [Required]
-        public virtual User Last_contributor { get; set; }
-        [InverseProperty("Home_Team")]
-        public virtual List<Match> Home_Matches { get; set; }
-        [InverseProperty("Away_Team")]
-        public virtual List<Match> Away_Matches { get; set; }
-        public virtual List<League_contestants> Competitions { get; set; }
+        public virtual User User { get; set; }
+        [Required]
+        public virtual Sport Sport { get; set; }
+        public virtual List<Team_player> Team_players { get; set; }
     }
 }

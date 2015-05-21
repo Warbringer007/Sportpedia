@@ -1,0 +1,47 @@
+﻿@model Application.Models.UserViewModel
+
+@{
+    ViewBag.Title = "Uređivanje računa";
+}
+
+<h2>Upišite nove podatke:</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Username)
+    <div class="container">
+        <form role="form">
+            <table class="table-responsive col-md-12 table-hover table-condensed" style="margin-bottom:5px">
+                <tr>
+                    <td colspan="2" style="color:red; font-weight:bold">@TempData["Greskaedit"]</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Stari password:</td>
+                    <td>@Html.PasswordFor(m => m.Password, new { @class = "form-control" })</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Novi password:</td>
+                    <td>@Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Ime:</td>
+                    <td>@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Prezime:</td>
+                    <td>@Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Email:</td>
+                    <td>@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Datum rođenja:</td>
+                    <td>@Html.TextBoxFor(m => m.Date_of_birth, new { @class = "form-control" })</td>
+                </tr>
+            </table>
+            <button type="submit" class="btn btn-default">Spremi promjene</button>
+        </form>
+    </div>
+}
+

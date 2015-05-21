@@ -7,12 +7,7 @@ using System.Threading.Tasks;
 
 namespace EFDatabase
 {
-    public enum League_type
-    {
-        Two_Games = 1,
-        Four_Games = 2
-    }
-    public class League
+    public class Competition
     {
         [Key]
         public int ID { get; set; }
@@ -23,14 +18,15 @@ namespace EFDatabase
         [Required]
         public string Country { get; set; }
         [Required]
-        public League_type Type_of_league{ get; set; }
+        public virtual Type_of_competition Type_of_competition { get; set; }
         [Required]
-        public virtual User Creator { get; set; }
+        public virtual User User { get; set; }
         [Required]
-        public int Sport { get; set; }
+        public virtual Sport Sport { get; set; }
+        public int Number_of_competitors { get; set; }
         public byte[] Emblem { get; set; }
-        public string Comment { get; set; }
-        public virtual List<League_contestants> League_contestants { get; set; }
+        public virtual List<Competition_comment> Competition_comments { get; set; }
+        public virtual List<Competition_contestant> Competition_contestants { get; set; }
         public virtual List<Match> Match { get; set; }
     }
 }

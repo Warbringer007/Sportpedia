@@ -46,21 +46,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Competition_comment.cs" />
+    <Compile Include="Contestant.cs" />
     <Compile Include="Context.cs" />
-    <Compile Include="League.cs" />
-    <Compile Include="League_contestants.cs" />
+    <Compile Include="Competition.cs" />
+    <Compile Include="Competition_contestant.cs" />
+    <Compile Include="Event.cs" />
+    <Compile Include="Event_list.cs" />
     <Compile Include="Match.cs" />
-    <Compile Include="Match_Information.cs" />
-    <Compile Include="Migrations\201503251551030_InitialCreate.cs" />
-    <Compile Include="Migrations\201503251551030_InitialCreate.Designer.cs">
-      <DependentUpon>201503251551030_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201503261652591_TeamComment.cs" />
-    <Compile Include="Migrations\201503261652591_TeamComment.Designer.cs">
-      <DependentUpon>201503261652591_TeamComment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Match_comment.cs" />
+    <Compile Include="Match_contestant.cs" />
+    <Compile Include="Permission.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Player_comment.cs" />
+    <Compile Include="Sport.cs" />
+    <Compile Include="Sport_comment.cs" />
+    <Compile Include="Sport_event.cs" />
+    <Compile Include="Sport_type.cs" />
     <Compile Include="Team.cs" />
+    <Compile Include="Team_comment.cs" />
+    <Compile Include="Team_player.cs" />
+    <Compile Include="Type_of_competition.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -68,14 +74,6 @@
     <None Include="App.config" />
     <None Include="Documents\Baza podataka završni.vsdx" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201503251551030_InitialCreate.resx">
-      <DependentUpon>201503251551030_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503261652591_TeamComment.resx">
-      <DependentUpon>201503261652591_TeamComment.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,56 @@
+﻿@model Application.Models.SingleTeamModel
+
+@{
+    ViewBag.Title = "Dodavanje novog kluba";
+}
+
+<h2>Informacije o novom klubu:</h2>
+@using (Html.BeginForm("Add", "Team", null, FormMethod.Post, new { enctype = "multipart/form-data"}))
+{
+    @Html.AntiForgeryToken();
+    <div class="container">
+        <form role="form">
+            <table class="table-responsive col-md-12 table-hover table-condensed" style="margin-bottom:5px">
+                <tr>
+                    <td colspan="2" style="color:red; font-weight:bold">@TempData["Greska"]</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Ime:</td>
+                    <td>@Html.TextBoxFor(m => m.Team.Name, new { @class = "form-control" })</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Sport:</td>
+                    <td>@Html.DropDownListFor(m => m.Team.Sport.ID, ((System.ComponentModel.BindingList<EFDatabase.Sport>)ViewBag.Sportovi).OrderBy(d => d.Name).Select(d => new SelectListItem { Text = d.Name, Value = d.ID.ToString() }), new { @class = "form-control"})</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Datum osnivanja kluba:</td>
+                    <td>@Html.TextBoxFor(m => m.Team.Founded, new { @class = "form-control" })</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Država:</td>
+                    <td>@Html.TextBoxFor(m => m.Team.Country, new { @class = "form-control" })</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Ime stadiona:</td>
+                    <td>@Html.TextBoxFor(m => m.Team.Stadium, new { @class = "form-control" })</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Ime navijača kluba:</td>
+                    <td>@Html.TextBoxFor(m => m.Team.Fans_Name, new { @class = "form-control" })</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Klupski grb:</td>
+                    <td class="editor-field">
+                        <input id="Image" name="Image" title="Odaberi klupski grb" type="file"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-2" style="vertical-align: top;">Dodatne informacije o klubu:</td>
+                    <td class="col-md-10">@Html.TextAreaFor(m => m.Comment, new { @class = "form-control", @style = "max-width:500px; height:250px" })</td>
+                </tr>
+            </table>
+            <button type="submit" class="btn btn-default">Napravi novi klub</button>
+        </form>
+    </div>
+}
+

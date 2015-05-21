@@ -1,0 +1,23 @@
+﻿@model Application.Models.SportViewModel
+@{
+    ViewBag.Title = Model.Sport.Name;
+}
+
+<h2>Informacije o sportu:</h2>
+<div class="container">
+    <table class="table-responsive col-md-12 table-hover table-condensed" style="margin-bottom:5px">
+        <tr>
+            <td class="col-md-2">Ime sporta:</td>
+            <td>@Model.Sport.Name</td>
+        </tr>
+        <tr>
+            <td class="col-md-2">User koji je dodao sport:</td>
+            <td>@Model.Sport.User.Username</td>
+        </tr>
+        <tr>
+            <td class="col-md-2">Dodatne informacije u sportu:</td>
+            <td>@Model.ActualComment</td>
+        </tr>
+    </table>
+</div>
+

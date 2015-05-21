@@ -6,12 +6,14 @@ using System.Text;
 
 namespace EFDatabase
 {
-    public class League_contestants
+    public class Team_player
     {
         [Key]
         public int ID { get; set; }
         [Required]
-        public virtual League League { get; set; }
+        public int Season { get; set; }
+        [Required]
+        public virtual Player Player { get; set; }
         [Required]
         public virtual Team Team { get; set; }
     }

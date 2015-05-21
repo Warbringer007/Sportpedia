@@ -1,0 +1,28 @@
+﻿@model Application.Models.TeamListView
+
+@{
+    ViewBag.Title = "Teams";
+}
+
+<h2>Svi klubovi:</h2>
+
+<div class="col-md-12" style="margin:8px">
+    <table class="table-responsive col-md-5 table-hover table-condensed style=" style="margin-bottom:5px">
+        <tr>
+            <th class="col-md-2.5">Ime kluba</th>
+            <th class="col-md-2.5">User koji je dodao klub</th>
+            <th class="col-md-2.5">Sport</th>
+            <th class="col-md-1"></th>
+        </tr>
+        @foreach (var s in Model.All_teams)
+        {
+            @:
+            <tr>
+                <td class="col-md-2.5">@Html.ActionLink(s.Name, "Index", new { teamname = s.Name })</td>
+                <td class="col-md-2.5">@s.User.Username</td>
+                <td class="col-md-2.5">@s.Sport.Name</td>
+            </tr>
+        }
+    </table>
+</div>
+

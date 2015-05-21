@@ -7,11 +7,6 @@ using System.Threading.Tasks;
 
 namespace EFDatabase
 {
-    public enum Permission
-    {
-        Normal = 1,
-        Moderator = 2
-    }
     public class User
     {
         [Key]
@@ -22,13 +17,19 @@ namespace EFDatabase
         public string Password { get; set; }
         public string Email { get; set; }
         [Required]
-        public Permission Permissions { get; set; }
+        public virtual Permission Permissions { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public DateTime Date_of_birth { get; set; }
-        public virtual List<League> Leagues { get; set; }
+        public virtual List<Competition> Competitions { get; set; }
         public virtual List<Team> Teams { get; set; }
-        public virtual List<Match_Information> Match_Informations { get; set; }
+        public virtual List<Player> Players { get; set; }
+        public virtual List<Sport> Sports { get; set; }
+        public virtual List<Sport_comment> Sport_comments { get; set; }
+        public virtual List<Player_comment> Player_comments { get; set; }
+        public virtual List<Team_comment> Team_comments { get; set; }
+        public virtual List<Match_comment> Match_comments { get; set; }
+        public virtual List<Competition_comment> Competition_comments { get; set; }
     }
     
 }

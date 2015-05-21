@@ -1,0 +1,68 @@
+﻿@using EFDatabase
+@model Application.Models.SingleTeamModel
+@{
+    ViewBag.Title = Model.Team.Name;
+}
+
+<h2>Informacije o klubu:</h2>
+@using (Html.BeginForm())
+{
+@Html.AntiForgeryToken()
+<div class="container">
+    <form role="form">
+        @Html.HiddenFor(m => m.Team.Name)
+        <table class="table-responsive col-md-12 table-hover table-condensed" style="margin-bottom: 5px">
+            <tr>
+                <td class="col-md-2">Ime kluba:</td>
+                <td>@Model.Team.Name</td>
+            </tr>
+            <tr>
+                <td class="col-md-2">Sport:</td>
+                <td>@Model.Team.Sport.Name</td>
+            </tr>
+            <tr>
+                <td class="col-md-2">Datum osnivanja kluba:</td>
+                <td>@Model.Team.Founded.ToShortDateString()</td>
+            </tr>
+            <tr>
+                <td class="col-md-2">Država:</td>
+                <td>@Model.Team.Country</td>
+            </tr>
+            <tr>
+                <td class="col-md-2">Ime stadiona:</td>
+                <td>@Model.Team.Stadium</td>
+            </tr>
+            <tr>
+                <td class="col-md-2">Ime navijača kluba:</td>
+                <td>@Model.Team.Fans_Name</td>
+            </tr>
+            @{
+                var base64 = Convert.ToBase64String(Model.Team.Emblem);
+                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            }
+            <tr>
+                <td class="col-md-2">Klupski grb:</td>
+                <td><img src="@imgSrc" width="150" height="150"/></td>
+            </tr>
+            <tr>
+                <td class="col-md-2" style="font-size: large; font-weight: bold">Komentari:</td>
+            </tr>
+            @foreach (Team_comment comment in Model.Team.Team_comments)
+                {
+                    <tr>
+
+                        <td>@comment.User.Username, @comment.Date.ToShortDateString() @comment.Date.Hour:@comment.Date.Minute</td>
+                        <td>@comment.Comment</td>
+
+                    </tr>
+                }
+            <tr>
+                <td class="col-md-2">Novi komentar:</td>
+                <td class="col-md-10" colspan="2">@Html.TextAreaFor(m => m.Comment, new {@class = "form-control", @style = "max-width:500px; height:250px"})</td>
+            </tr>
+        </table>
+    </form>
+    <button type="submit" class="btn btn-default">Dodaj novi komentar</button>
+</div>
+}
+
