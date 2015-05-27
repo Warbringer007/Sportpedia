@@ -1,68 +1,115 @@
-﻿@using EFDatabase
+﻿@using System
+@using EFDatabase
 @model Application.Models.SingleTeamModel
 @{
     ViewBag.Title = Model.Team.Name;
 }
 
 <h2>Informacije o klubu:</h2>
-@using (Html.BeginForm())
-{
-@Html.AntiForgeryToken()
 <div class="container">
-    <form role="form">
-        @Html.HiddenFor(m => m.Team.Name)
-        <table class="table-responsive col-md-12 table-hover table-condensed" style="margin-bottom: 5px">
-            <tr>
-                <td class="col-md-2">Ime kluba:</td>
-                <td>@Model.Team.Name</td>
-            </tr>
-            <tr>
-                <td class="col-md-2">Sport:</td>
-                <td>@Model.Team.Sport.Name</td>
-            </tr>
-            <tr>
-                <td class="col-md-2">Datum osnivanja kluba:</td>
-                <td>@Model.Team.Founded.ToShortDateString()</td>
-            </tr>
-            <tr>
-                <td class="col-md-2">Država:</td>
-                <td>@Model.Team.Country</td>
-            </tr>
-            <tr>
-                <td class="col-md-2">Ime stadiona:</td>
-                <td>@Model.Team.Stadium</td>
-            </tr>
-            <tr>
-                <td class="col-md-2">Ime navijača kluba:</td>
-                <td>@Model.Team.Fans_Name</td>
-            </tr>
-            @{
-                var base64 = Convert.ToBase64String(Model.Team.Emblem);
-                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-            }
-            <tr>
-                <td class="col-md-2">Klupski grb:</td>
-                <td><img src="@imgSrc" width="150" height="150"/></td>
-            </tr>
-            <tr>
-                <td class="col-md-2" style="font-size: large; font-weight: bold">Komentari:</td>
-            </tr>
-            @foreach (Team_comment comment in Model.Team.Team_comments)
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <form role="form">
+            @Html.HiddenFor(m => m.Team.ID)
+            <table class="table-responsive col-md-7 table-hover table-condensed" style="margin-bottom: 5px">
+                <tr>
+                    <td class="col-md-4">Ime kluba:</td>
+                    <td>@Model.Team.Name</td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">Sport:</td>
+                    <td>@Model.Team.Sport.Name</td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">Datum osnivanja kluba:</td>
+                    <td>@Model.Team.Founded.ToShortDateString()</td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">Država:</td>
+                    <td>@Model.Team.Country</td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">Ime stadiona:</td>
+                    <td>@Model.Team.Stadium</td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">Ime navijača kluba:</td>
+                    <td>@Model.Team.Fans_Name</td>
+                </tr>
+                @{
+                    var base64 = Convert.ToBase64String(Model.Team.Emblem);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                }
+                <tr>
+                    <td class="col-md-4">Klupski grb:</td>
+                    <td><img src="@imgSrc" width="150" height="150"/></td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">Web stranica kluba:</td>
+                    <td>@Model.Team.Webpage</td>
+                </tr>
+                <tr>
+                    <td class="col-md-2" style="font-size: large; font-weight: bold">Komentari:</td>
+                </tr>
+                @foreach (Team_comment comment in Model.Team.Team_comments)
                 {
                     <tr>
 
                         <td>@comment.User.Username, @comment.Date.ToShortDateString() @comment.Date.Hour:@comment.Date.Minute</td>
-                        <td>@comment.Comment</td>
+                        <td colspan="2">@comment.Comment</td>
 
                     </tr>
                 }
-            <tr>
-                <td class="col-md-2">Novi komentar:</td>
-                <td class="col-md-10" colspan="2">@Html.TextAreaFor(m => m.Comment, new {@class = "form-control", @style = "max-width:500px; height:250px"})</td>
-            </tr>
-        </table>
-    </form>
-    <button type="submit" class="btn btn-default">Dodaj novi komentar</button>
-</div>
-}
+                <tr>
+                    <td class="col-md-4">Novi komentar:</td>
+                    <td class="col-md-8" colspan="2">@Html.TextAreaFor(m => m.Comment, new {@class = "form-control", @style = "max-width:500px; height:250px"})</td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="submit" class="btn btn-default">Dodaj novi komentar</button>
+                    </td>
+                    @if (TempData["Username"].Equals(@Model.Team.User.Username))
+                    {
+                        <td>@Html.ActionLink("Uredi podatke o klubu", "Edit", new { id = @Model.Team.ID }, new { @class = "btn btn-default" })</td>
+                   
+                    }
+                </tr>
+                
+            </table>
+        </form>
+        
+    }
+
+    @using (Html.BeginForm("NewPlayer", "Team", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <form role="form">
+            @Html.HiddenFor(m => m.Team.ID)
+            <table class="table-responsive col-md-5 table-hover table-condensed" style="margin-bottom: 5px">
+                <tr>
+                    <td class="col-md-3" colspan="3" style="font-size: large; font-weight: bold">Popis igrača u klubu:</td>
+                </tr>
+                <tr>
+                    <td class="col-md-3">Ime igrača:</td>
+                    <td class="col-md-5">Datum rođenja igrača:</td>
+                    <td class="col-md-4">Država:</td>
+                </tr>
+                @foreach (Team_player player in Model.Team.Team_players)
+                {
+                    <tr>
+                        <td>@player.Player.Name</td>
+                        <td>@player.Player.Date_of_birth.ToShortDateString()</td>
+                        <td>@player.Player.Country</td>
+                    </tr>
+                }
+                <tr>
+                    <td class="col-md-3">Novi igrač:</td>
+                    <td>@Html.DropDownListFor(m => m.Player, ((System.ComponentModel.BindingList<EFDatabase.Player>) ViewBag.Players).OrderBy(d => d.Name).Select(d => new SelectListItem {Text = d.Name, Value = d.ID.ToString()}), new {@class = "form-control"})</td>
+                </tr>
+            </table>
+            <button type="submit" class="btn btn-default">Dodaj novog igrača u klub</button>
+        </form>
+    }
+    </div>
 

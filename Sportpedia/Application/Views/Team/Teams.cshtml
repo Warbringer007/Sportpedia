@@ -1,7 +1,7 @@
 ﻿@model Application.Models.TeamListView
 
 @{
-    ViewBag.Title = "Teams";
+    ViewBag.Title = "Klubovi";
 }
 
 <h2>Svi klubovi:</h2>
@@ -18,7 +18,7 @@
         {
             @:
             <tr>
-                <td class="col-md-2.5">@Html.ActionLink(s.Name, "Index", new { teamname = s.Name })</td>
+                <td class="col-md-2.5">@Html.ActionLink(s.Name, "Index", new { id = s.ID })</td>
                 <td class="col-md-2.5">@s.User.Username</td>
                 <td class="col-md-2.5">@s.Sport.Name</td>
             </tr>

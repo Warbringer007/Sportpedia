@@ -64,7 +64,7 @@ namespace Application.Controllers
                 return RedirectToAction("Racun", "User");
             }
             var dal = new Team_services();
-            if (model.Team.Name == null || model.Team.Country == null || model.Image == null || model.Team.Fans_Name == null || model.Team.Stadium == null)
+            if (model.Team.Name == null || model.Team.Country == null || model.Image == null || model.Team.Fans_Name == null || model.Team.Stadium == null || model.Team.Webpage == null)
             {
                 return RedirectToAction("Add", new { greska = "Popunite sve podatke o klubu!" });
             }
@@ -76,11 +76,11 @@ namespace Application.Controllers
             model.Image.InputStream.CopyTo(target);
             model.Team.Emblem = target.ToArray();
             dal.New_Team(model, username);
-            return RedirectToAction("Index", new { teamname = model.Team.Name});
+            return RedirectToAction("Index", new { id = dal.Check_existing(model.Team.Name).ID });
         }
 
         [HttpGet]
-        public ActionResult Index(string teamname)
+        public ActionResult Index(int id)
         {
             if (Request.Cookies["user"] == null)
             {
@@ -89,7 +89,9 @@ namespace Application.Controllers
             string username = Logged_username();
             Set_TempData(username);
             var dal = new Team_services();
-            SingleTeamModel model = new SingleTeamModel {Team = dal.Check_existing(teamname)};
+            BindingList<Player> players = dal.Igraci(dal.Check_existing(id).Sport);
+            ViewBag.Players = players;
+            SingleTeamModel model = new SingleTeamModel {Team = dal.Check_existing(id)};
             return View(model);
         }
 
@@ -103,10 +105,54 @@ namespace Application.Controllers
             }
             string username = Logged_username();
             var dal = new Team_services();
-            dal.Add_comment(model, username);
-            return RedirectToAction("Index", new { teamname = model.Team.Name });
+            if ( model.Comment != null ) dal.Add_comment(model, username);
+            return RedirectToAction("Index", new { teamname = model.Team.ID });
         }
 
+        [HttpGet]
+        public ActionResult Edit(int id, string greska = "")
+        {
+            if (Request.Cookies["user"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            string username = Logged_username();
+            Set_TempData(username);
+            TempData["Greska"] = greska;
+            var dal = new Team_services();
+            SingleTeamModel model = new SingleTeamModel { Team = dal.Check_existing(id) };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(SingleTeamModel model)
+        {
+            if (Request.Cookies["user"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            string username = Logged_username();
+            if (Set_TempData(username) == "user")
+            {
+                return RedirectToAction("Racun", "User");
+            }
+            var dal = new Team_services();
+            if (model.Team.Name == null || model.Team.Country == null  || model.Team.Fans_Name == null || model.Team.Stadium == null || model.Team.Webpage == null)
+            {
+                return RedirectToAction("Edit", new { greska = "Popunite sve podatke o klubu!", id = model.Team.ID });
+            }
+            MemoryStream target = new MemoryStream();
+            if (model.Image != null)
+            {
+                model.Image.InputStream.CopyTo(target);
+                model.Team.Emblem = target.ToArray();
+            }
+            dal.Edit_Team(model);
+            return RedirectToAction("Index", new { id = model.Team.ID });
+        }
+
+        [HttpGet]
         public ActionResult Teams()
         {
             if (Request.Cookies["user"] == null)
@@ -122,5 +168,17 @@ namespace Application.Controllers
             };
             return View(view);
         }
-	}
+
+        [HttpPost]
+        public ActionResult NewPlayer(SingleTeamModel model)
+        {
+            if (Request.Cookies["user"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
+            var dal = new Team_services();
+            dal.Add_Player(model);
+            return RedirectToAction("Index", new { id = model.Team.ID });
+        }
+    }
 }

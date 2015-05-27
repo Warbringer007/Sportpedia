@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/knockout-3.3.0.js"></script>
 </head>
 <body>
     @if (Request.Cookies["user"] != null)
@@ -49,6 +50,20 @@
                             }
                         </ul>
                     </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Igrač <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Svi igrači", "Players", "Player")</li>
+                            <li>@Html.ActionLink("Dodaj novog igrača", "Add", "Player")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Natjecanje <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Sva natjecanja", "Competitions", "Competition")</li>
+                            <li>@Html.ActionLink("Dodaj novo natjecanje", "Add", "Competition")</li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -58,7 +73,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Sportpedia by Davor Nekić, v0.1</p>
+            <p>&copy; @DateTime.Now.Year - Sportpedia by Davor Nekić, v0.75</p>
         </footer>
     </div>
 

@@ -19,6 +19,8 @@ namespace EFDatabase
         public string Country { get; set; }
         public string Fans_Name { get; set; }
         public string Stadium { get; set; }
+        public string Webpage { get; set; }
+        
         public byte[] Emblem { get; set; }
         public virtual List<Team_comment> Team_comments { get; set; }
         [Required]

@@ -65,58 +65,6 @@ namespace Application.Services
                         ctx.SaveChanges();
                     }
                 }
-
-                /*Sport_event mainevent = new Sport_event();
-                mainevent.Sport = sport;
-                if (model.Eventi.ToString().Equals("Set")) mainevent.Event_list = ctx.Event_list.Single(e => e.Name == "Set");
-                else mainevent.Event_list = ctx.Event_list.Single(e => e.Name == "Goal");
-                ctx.Sport_events.Add(mainevent);
-                ctx.SaveChanges();
-
-                if (model.Penalty)
-                {
-                    Sport_event penalty = new Sport_event();
-                    penalty.Sport = sport;
-                    penalty.Event_list = ctx.Event_list.Single(e => e.Name == "Penalty");
-                    ctx.Sport_events.Add(penalty);
-                    ctx.SaveChanges();
-                }
-
-                if (model.Penalty_kick)
-                {
-                    Sport_event penalty_kick = new Sport_event();
-                    penalty_kick.Sport = sport;
-                    penalty_kick.Event_list = ctx.Event_list.Single(e => e.Name == "Penalty kick");
-                    ctx.Sport_events.Add(penalty_kick);
-                    ctx.SaveChanges();
-                }
-
-                if (model.Red_card)
-                {
-                    Sport_event red_card = new Sport_event();
-                    red_card.Sport = sport;
-                    red_card.Event_list = ctx.Event_list.Single(e => e.Name == "Red card");
-                    ctx.Sport_events.Add(red_card);
-                    ctx.SaveChanges();
-                }
-
-                if (model.Substitution)
-                {
-                    Sport_event substitution = new Sport_event();
-                    substitution.Sport = sport;
-                    substitution.Event_list = ctx.Event_list.Single(e => e.Name == "Substitution");
-                    ctx.Sport_events.Add(substitution);
-                    ctx.SaveChanges();
-                }
-
-                if (model.Yellow_card)
-                {
-                    Sport_event yellow_card = new Sport_event();
-                    yellow_card.Sport = sport;
-                    yellow_card.Event_list = ctx.Event_list.Single(e => e.Name == "Yellow card");
-                    ctx.Sport_events.Add(yellow_card);
-                    ctx.SaveChanges();
-                }*/
             }
         }
 

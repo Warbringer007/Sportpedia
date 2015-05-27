@@ -37,7 +37,7 @@
                 </tr>
                 <tr>
                     <td class="col-md-2">Datum rođenja:</td>
-                    <td>@Html.TextBoxFor(m => m.Date_of_birth, new { @class = "form-control" })</td>
+                    <td>@Html.TextBoxFor(m => m.Date_of_birth, "{0:dd.MM.yyyy}", new { @class = "form-control" })</td>
                 </tr>
             </table>
             <button type="submit" class="btn btn-default">Spremi promjene</button>

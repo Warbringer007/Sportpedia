@@ -29,7 +29,7 @@ namespace Application.Services
         {
             using (var ctx = new Context())
             {
-                return ctx.Event_list.ToList();
+                return ctx.Event_list.Include("Sport_events").ToList();
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿@model Application.Models.SingleTeamModel
+﻿@using System.Linq
+@model Application.Models.SingleTeamModel
 
 @{
     ViewBag.Title = "Dodavanje novog kluba";
@@ -43,6 +44,10 @@
                     <td class="editor-field">
                         <input id="Image" name="Image" title="Odaberi klupski grb" type="file"/>
                     </td>
+                </tr>
+                <tr>
+                    <td class="col-md-2">Web stranica kluba:</td>
+                    <td>@Html.TextBoxFor(m => m.Team.Webpage, new { @class = "form-control" })</td>
                 </tr>
                 <tr>
                     <td class="col-md-2" style="vertical-align: top;">Dodatne informacije o klubu:</td>
