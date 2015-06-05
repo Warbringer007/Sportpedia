@@ -10,7 +10,7 @@ namespace Application.Services
 {
     public class Competition_services
     {
-        public void GenerateMatches(Competition competition, List<Contestant> teams)
+        public void GenerateMatchesLeague(Competition competition, List<Contestant> teams)
         {
             using (var ctx = new Context())
             {
@@ -79,13 +79,15 @@ namespace Application.Services
             }
         }
 
-        private void SingleMatch(Competition competition, Contestant homeTeam, Contestant awayTeam)
+        private void SingleMatch(Competition competition, Contestant homeTeam, Contestant awayTeam, int round = 0)
         {
             using (var ctx = new Context())
             {
                 Match match = new Match();
                 match.Date = DateTime.UtcNow;
                 match.Locked = false;
+                match.Playing = true;
+                match.Round = round;
                 match.League = ctx.Competitions.FirstOrDefault(m => m.Name == competition.Name);
                 ctx.Matches.Add(match);
                 ctx.SaveChanges();
@@ -178,8 +180,49 @@ namespace Application.Services
                     ctx.Competition_contestants.Add(contestant);
                     ctx.SaveChanges();
                 }
+                if (competition.Type_of_competition.LeagueCup)
+                {
+                    GenerateMatchesLeague(competition, contestants);
+                }
+                else
+                {
+                    GenerateMatchesCup(competition, contestants);
+                }         
+            }
+        }
 
-                GenerateMatches(competition, contestants);
+        private void GenerateMatchesCup(Competition competition, List<Contestant> contestants)
+        {
+            using (var ctx = new Context())
+            {
+                int numberOfContestants = contestants.Count();
+                int rounds = (int)Math.Log(numberOfContestants, 2);
+                for (int i = 0; i < numberOfContestants/2; i++)
+                {
+                    SingleMatch(competition, contestants.ElementAt(i*2), contestants.ElementAt(i*2+1), 1);
+                }
+                for (int i = 2; i < rounds + 1; i++)
+                {
+                    for (int j = 0; j < numberOfContestants/((int) Math.Pow(2, i)); j++)
+                    {
+                        UndefinedCupMatch(competition, i);
+                    }
+                }
+            }
+        }
+
+        private void UndefinedCupMatch(Competition competition, int round)
+        {
+            using (var ctx = new Context())
+            {
+                Match match = new Match();
+                match.Date = DateTime.UtcNow;
+                match.Locked = false;
+                match.Playing = false;
+                match.Round = round;
+                match.League = ctx.Competitions.FirstOrDefault(m => m.Name == competition.Name);
+                ctx.Matches.Add(match);
+                ctx.SaveChanges();
             }
         }
 
@@ -196,7 +239,7 @@ namespace Application.Services
         {
             using (var ctx = new Context())
             {
-                return ctx.Matches.Include("League").Include("Events").Include("Match_comments").Include("Match_contestants.Contestant").FirstOrDefault(m => m.ID == id);
+                return ctx.Matches.Include("League").Include("League.Sport").Include("Events").Include("Match_comments").Include("Match_contestants.Contestant").FirstOrDefault(m => m.ID == id);
             }
         }
 
@@ -204,7 +247,17 @@ namespace Application.Services
         {
             using (var ctx = new Context())
             {
-                Match currentMatch = ctx.Matches.FirstOrDefault(m => m.ID == deserialized.ID);
+                Match currentMatch = ctx.Matches.Include("League").FirstOrDefault(m => m.ID == deserialized.ID);
+                try
+                {
+                    currentMatch.Locked = true;
+                    currentMatch.Date = Convert.ToDateTime(deserialized.Date);
+                    ctx.SaveChanges();
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    Console.WriteLine(ex);
+                }
 
                 if (deserialized.Comment != null)
                 {
@@ -233,7 +286,7 @@ namespace Application.Services
                         Event matchEvent = new Event();
                         matchEvent.Length = one.LE;
                         matchEvent.Timestamp = DateTime.UtcNow;
-                        matchEvent.Time = "LOL";
+                        matchEvent.Time = one.DA;
                         matchEvent.Name = one.Name;
                         if ( one.PO1 != "") matchEvent.Points1 = Convert.ToInt32(one.PO1);
                         if ( one.PO2 != "") matchEvent.Points2 = Convert.ToInt32(one.PO2);
@@ -250,6 +303,44 @@ namespace Application.Services
                         Console.WriteLine(ex);
                     }
                 }
+                if (!currentMatch.League.Type_of_competition.LeagueCup)
+                {
+                    CupNextMatch(currentMatch.ID);
+                }
+            }
+        }
+
+        private void CupNextMatch(int current)
+        {
+            using (var ctx = new Context())
+            {
+                Match currentMatch = ctx.Matches.SingleOrDefault(m => m.ID == current);
+                int starting = currentMatch.League.Match.OrderBy(m => m.ID).FirstOrDefault().ID;
+                int totalMatches = currentMatch.League.Match.Count;
+                int round = currentMatch.Round;
+                int totalRounds = (int)Math.Log(totalMatches + 1, 2);
+                int redniUKolu = current - starting - (totalMatches - (int)Math.Pow(2, totalRounds - round + 1));
+                int redniUSljedecem = (redniUKolu + 1) / 2;
+                int total = starting + totalMatches - ((totalMatches + 1) / (int)Math.Pow(2, round) - redniUSljedecem);
+                Match nextMatch = ctx.Matches.SingleOrDefault(m => m.ID == total);
+                Match_contestant home = new Match_contestant();
+                home.Match = nextMatch;
+                var x = HomePoints(currentMatch);
+                if (HomePoints(currentMatch) > AwayPoints(currentMatch))
+                {
+                    home.Contestant = currentMatch.Match_contestants.ElementAt(0).Contestant;
+                }
+                else
+                {
+                    home.Contestant = currentMatch.Match_contestants.ElementAt(1).Contestant;
+                }
+                ctx.Match_contestants.Add(home);
+                ctx.SaveChanges();
+                if (nextMatch.Match_contestants.Count == 2)
+                {
+                    nextMatch.Playing = true;
+                    ctx.SaveChanges();
+                }     
             }
         }
 
@@ -326,6 +417,36 @@ namespace Application.Services
                 }
             }
             return points;
+        }
+
+        public List<Event> Match_events(int id)
+        {
+            using (var ctx = new Context())
+            {
+                return ctx.Events.Include("Player1").Include("Player2").Where(m => m.Match.ID == id).ToList();
+            }
+        }
+
+        public List<Event_list> Sport_events(int id)
+        {
+            List<Event_list> events = new List<Event_list>();
+            using (var ctx = new Context())
+            {
+                List<Sport_event> sport = ctx.Sport_events.Where(m => m.Sport.ID == id).ToList();
+                foreach (var one in sport)
+                {
+                    events.Add(ctx.Event_list.FirstOrDefault(m => m.ID == one.Event_list.ID));
+                }
+            }
+            return events;
+        }
+
+        public List<Match> CompetitionMatches(Competition competition)
+        {
+            using (var ctx = new Context())
+            {
+                return ctx.Matches.Include("Match_contestants.Contestant").Where(m => m.League.ID == competition.ID).ToList();
+            }
         }
     }
 }

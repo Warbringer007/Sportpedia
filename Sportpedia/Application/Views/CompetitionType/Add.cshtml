@@ -23,29 +23,63 @@
                 </tr>
                 <tr>
                     <td class="col-md-3">Sustav natjecanja:</td>
-                    <td class="col-md-2">Dvokružni sustav</td>
-                    <td>@Html.RadioButtonFor(model => model.DoubleQuadra, true, new { id = "double", @checked = true })</td>
+                    <td class="col-md-2">Liga sustav</td>
+                    <td>@Html.RadioButtonFor(model => model.LeagueCup, true, new { id = "league", onchange ="leagueScript()", @checked = true })</td>
                 </tr>
                 <tr>
                     <td class="col-md-3"></td>
-                    <td class="col-md-2">Četverokružni sustav</td>
-                    <td>@Html.RadioButtonFor(model => model.DoubleQuadra, false, new {id = "quadra"})</td>
+                    <td class="col-md-2">Kup sustav</td>
+                    <td>@Html.RadioButtonFor(model => model.LeagueCup, false, new {id = "cup", onchange ="cupScript()"})</td>
                 </tr>
-                <tr>
+                <tr id ="leagueRow1">
+                    <td class="col-md-3">Kup sustav:</td>
+                    <td class="col-md-2">Dvokružno natjecanje</td>
+                    <td>@Html.RadioButtonFor(model => model.DoubleQuadra, true, new { id = "double", @checked = true })</td>
+                </tr>
+                <tr id="leagueRow2">
+                    <td class="col-md-3"></td>
+                    <td class="col-md-2">Četverokružno natjecanje</td>
+                    <td>@Html.RadioButtonFor(model => model.DoubleQuadra, false, new { id = "quadra" })</td>
+                </tr>
+                <tr id="leagueRow3">
                     <td class="col-md-3">Broj bodova za pobjedu</td>
                     <td colspan="2">@Html.TextBoxFor(m => m.Victory_points, new { @class = "form-control" })</td>
                 </tr>
-                <tr>
+                <tr id="leagueRow4">
                     <td class="col-md-3">Broj bodova za neriješen rezultat</td>
                     <td colspan="2">@Html.TextBoxFor(m => m.Tie_points, new { @class = "form-control" })</td>
                 </tr>
-                <tr>
+                <tr id="leagueRow5">
                     <td class="col-md-3">Broj bodova za poraz</td>
-                    <td colspan="2">@Html.TextBoxFor(m => m.Defeat_points, new { @class = "form-control" })</td>
+                    <td colspan="2">@Html.TextBoxFor(m => m.Defeat_points, new {@class = "form-control"})</td>
+                </tr>
+                <tr id="cupRow" style="display: none">
+                    <td class="col-md-3">Broj pobjeda za prolaz dalje</td>
+                    <td colspan="2">@Html.TextBoxFor(m => m.Best_of_N, new { @class = "form-control" })</td>
                 </tr>
             </table>
             <button type="submit" class="btn btn-default">Dodaj novi tip natjecanja</button>
         </form>
     </div>
 }
+
+<script type="text/javascript">
+    function cupScript() {
+        document.getElementById("leagueRow1").style.display = "none";
+        document.getElementById("leagueRow2").style.display = "none";
+        document.getElementById("leagueRow3").style.display = "none";
+        document.getElementById("leagueRow4").style.display = "none";
+        document.getElementById("leagueRow5").style.display = "none";
+        document.getElementById("cupRow").style.display = "table-row";
+    }
+
+    function leagueScript() {
+        document.getElementById("cupRow").style.display = "none";
+        document.getElementById("leagueRow1").style.display = "table-row";
+        document.getElementById("leagueRow2").style.display = "table-row";
+        document.getElementById("leagueRow3").style.display = "table-row";
+        document.getElementById("leagueRow4").style.display = "table-row";
+        document.getElementById("leagueRow5").style.display = "table-row";
+    }
+</script>
 

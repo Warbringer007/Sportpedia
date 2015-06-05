@@ -35,19 +35,18 @@ namespace Application.Controllers
             {
                 return RedirectToAction("Login", "User");
             }
-            else
+            string username = Logged_username();
+            if (Set_TempData(username) == "user")
             {
-                string username = Logged_username();
-                if (Set_TempData(username) == "user")
-                {
-                    return RedirectToAction("Racun", "User");
-                }
-                var dal = new Team_services();
-                BindingList<Sport> sportovi = dal.Sportovi();
-                ViewBag.Sportovi = sportovi;
-                TempData["Greska"] = greska;
-                return View();
+                return RedirectToAction("Racun", "User");
             }
+            var dal = new Team_services();
+            BindingList<Sport> sportovi = dal.Sportovi();
+            ViewBag.Sportovi = sportovi;
+            BindingList<Stadium> stadioni = dal.Stadioni();
+            ViewBag.Stadioni = stadioni;
+            TempData["Greska"] = greska;
+            return View();
         }
 
         [HttpPost]
@@ -64,7 +63,7 @@ namespace Application.Controllers
                 return RedirectToAction("Racun", "User");
             }
             var dal = new Team_services();
-            if (model.Team.Name == null || model.Team.Country == null || model.Image == null || model.Team.Fans_Name == null || model.Team.Stadium == null || model.Team.Webpage == null)
+            if (model.Team.Name == null || model.Team.Country == null || model.Image == null || model.Team.Fans_Name == null || /*model.Team.Stadium == null ||*/ model.Team.Webpage == null)
             {
                 return RedirectToAction("Add", new { greska = "Popunite sve podatke o klubu!" });
             }
@@ -138,7 +137,7 @@ namespace Application.Controllers
                 return RedirectToAction("Racun", "User");
             }
             var dal = new Team_services();
-            if (model.Team.Name == null || model.Team.Country == null  || model.Team.Fans_Name == null || model.Team.Stadium == null || model.Team.Webpage == null)
+            if (model.Team.Name == null || model.Team.Country == null  || model.Team.Fans_Name == null || /*model.Team.Stadium == null ||*/ model.Team.Webpage == null)
             {
                 return RedirectToAction("Edit", new { greska = "Popunite sve podatke o klubu!", id = model.Team.ID });
             }

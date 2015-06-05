@@ -1,0 +1,87 @@
+﻿@model Application.Models.CupViewModel
+
+@{
+    ViewBag.Title = "Kup";
+}
+
+<h2>Turnir:</h2>
+<div class="container">
+    @for (int x = 0; x < Model.Rounds; x++)
+    {
+        <table class="table-responsive col-md-2" style="margin-bottom: 5px; margin-top: 10px">
+            <tr>
+                <td style="width: 11em;">
+                    &nbsp;
+                </td>
+                <td style="width: 2em;">
+                    &nbsp;
+                </td>
+                <td style="width: 1em;">
+                    &nbsp;
+                </td>
+                <td style="width: 1em;">
+                    &nbsp;
+                </td>
+            </tr>
+            @for (int y = 0; y < ((int)Math.Pow(2,x) - 1); y++)
+            {
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            }
+            @for (int y = 0; y < (Model.Matches.Count + 1) / (int)Math.Pow(2, x + 1); y++)
+            {
+                var currentMatch = @Model.Matches.ElementAt((Model.Matches.Count + 1 - ((Model.Matches.Count + 1)/(int) Math.Pow(2, x) - y)));
+                <tr>
+                    @if (currentMatch.Match.Playing)
+                    {
+                        if (currentMatch.Match.Locked)
+                        {
+                            <td style="outline: 1px solid #aaa; text-align: center" rowspan="2">
+                                @Html.ActionLink(currentMatch.HomeContestant + " - " + currentMatch.AwayContestant, "ViewMatch", new {id = @currentMatch.Match.ID})
+                            </td>
+                        }
+                        else
+                        {
+                            <td style="outline: 1px solid #aaa; text-align: center" rowspan="2">
+                                @Html.ActionLink(currentMatch.HomeContestant + " - " + currentMatch.AwayContestant, "AddMatch", new { id = @currentMatch.Match.ID })
+                            </td>
+                        }
+                    }
+                    else
+                    {
+                        <td style="outline: 1px solid #aaa; text-align: center" rowspan="2"></td>
+                    }
+                    <td style="outline: 1px solid #aaa; text-align: center; background-color: lightgray">
+                        <b>@currentMatch.HomePoints</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="outline: 1px solid #aaa; text-align: center; background-color: lightgray">
+                        <b>@currentMatch.AwayPoints</b>
+                    </td>
+                </tr>
+                if (y + 1 < (Model.Matches.Count + 1) / (int)Math.Pow(2, x + 1))
+                {
+                    for (int z = 0; z < (((int)Math.Pow(2, x) - 1) * 2 + 1); z++)
+                    {
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    }
+                }
+            }
+        </table>
+    }
+</div>
+

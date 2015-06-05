@@ -30,9 +30,15 @@
                     <td>@Model.Team.Country</td>
                 </tr>
                 <tr>
-                    <td class="col-md-4">Ime stadiona:</td>
-                    <td>@Model.Team.Stadium</td>
+                    <td class="col-md-4">Stadioni/borilišta:</td>
                 </tr>
+                @foreach (Stadium stadium in Model.Team.Stadiums)
+                {
+                    <tr>
+                        <td class="col-md-4"></td>
+                        <td>@stadium.Name</td>
+                    </tr>
+                }
                 <tr>
                     <td class="col-md-4">Ime navijača kluba:</td>
                     <td>@Model.Team.Fans_Name</td>

@@ -1,0 +1,39 @@
+﻿@using Application.Models
+@model Application.Models.LeagueViewModel
+
+@{
+    ViewBag.Title = "Tablica";
+}
+
+<h2>Tablica:</h2>
+<div class="container">
+    <table class="table-responsive col-md-12 table-huver table-bordered table-condensed" style="margin-bottom: 5px; margin-top: 10px">
+        <tr>
+            <td class="col-md-2" style="font-weight: bold">Ekipa:</td>
+            <td class="col-md-1" style="font-weight: bold">Utakmica:</td>
+            <td class="col-md-1" style="font-weight: bold">Pobjeda:</td>
+            <td class="col-md-1" style="font-weight: bold">Neriješeno:</td>
+            <td class="col-md-1" style="font-weight: bold">Poraza:</td>
+            <td class="col-md-1" style="font-weight: bold">G+</td>
+            <td class="col-md-1" style="font-weight: bold">G-</td>
+            <td class="col-md-1" style="font-weight: bold">G+/-</td>
+            <td class="col-md-1" style="font-weight: bold">Bodova:</td>
+        </tr>
+        @foreach (Standing standing in Model.Standings)
+        {
+            <tr>
+                <td class="col-md-2">@standing.Team.Name</td>
+                <td class="col-md-1">@standing.PlayedMatches</td>
+                <td class="col-md-1">@standing.Wins</td>
+                <td class="col-md-1">@standing.Draws</td>
+                <td class="col-md-1">@standing.Loses</td>
+                <td class="col-md-1">@standing.GoalsScored</td>
+                <td class="col-md-1">@standing.GoalsConceded</td>
+                <td class="col-md-1">@(standing.GoalsScored - standing.GoalsConceded)</td>
+                <td class="col-md-1">@standing.Points</td>
+            </tr>
+        }
+    </table>
+</div>
+<h2>Raspored utakmica:</h2>
+

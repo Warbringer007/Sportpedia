@@ -30,7 +30,7 @@ namespace Application.Services
         {
              using (var ctx = new Context())
              {
-                 return ctx.Sports.Where(s => s.Name == name).FirstOrDefault();
+                 return ctx.Sports.Include("Sport_events").Include("Sport_events.Event_list").FirstOrDefault(s => s.Name == name);
              }
         }
 

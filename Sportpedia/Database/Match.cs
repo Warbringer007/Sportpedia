@@ -15,8 +15,12 @@ namespace EFDatabase
         [Required]
         public virtual Competition League { get; set; }
         public virtual List<Match_contestant> Match_contestants { get; set; }
+        public string Stadium { get; set; }
+        public int Round { get; set; }
         [Required]
         public bool Locked { get; set; }
+        [Required]
+        public bool Playing { get; set; }
         [Required]
         public DateTime Date { get; set; }
         public virtual List<Match_comment> Match_comments { get; set; }

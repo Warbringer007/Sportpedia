@@ -1,0 +1,64 @@
+﻿@using EFDatabase
+@model Application.Models.MatchViewModel
+
+@{
+    ViewBag.Title = "Meč";
+}
+
+<h2>Informacije o meču:</h2>
+<div class="container">
+    <h3 class="col-md-5" style="text-align: right">@Model.HomeContestant</h3>
+    <h3 class="col-md-1" style="text-align: center">:</h3>
+    <h3 class="col-md-5" style="text-align: left">@Model.AwayContestant</h3>
+    <h3 class="col-md-5" style="text-align: right">@Model.HomePoints</h3>
+    <h3 class="col-md-1" style="text-align: center">:</h3>
+    <h3 class="col-md-5" style="text-align: left">@Model.AwayPoints</h3>
+    <h3 class="col-md-1"></h3>
+    <table class="table-responsive col-md-12 table-hover table-condensed" style="margin-bottom: 5px">
+        <tr>
+            <td class="col-md-4" colspan="3" style="color: red; font-weight: bold">@TempData["Greska"]</td>
+            <td class="col-md-2"></td>
+            <td class="col-md-2"></td>
+            <td class="col-md-2"></td>
+            <td class="col-md-2"></td>
+        </tr>
+        <tr>
+            <td class="col-md-1">Datum:</td>
+            <td class="col-md-2">@Model.Match.Date</td>
+        </tr>
+        <tr>
+            <td class="col-md-2" colspan="2">Događaji na meču:</td>
+        </tr>
+        @foreach (Event one in Model.Events)
+        {
+            <tr>
+                <td class="col-md-1">@one.Name</td>
+                @if (one.Player1 != null)
+                {
+                    <td class="col-md-2">@one.Player1.Name</td>
+                }
+                @if (one.Player2 != null)
+                {
+                    <td class="col-md-2">@one.Player2.Name</td>
+                }
+                @if (one.Player1 != null && one.Points1 != 0)
+                {
+                    <td class="col-md-2">Bodova: @one.Points1</td>
+                    if (one.Player2 != null)
+                    {
+                        <td class="col-md-2">Bodova: @one.Points2</td>
+                    }
+                }
+                else if (one.Points1 != 0 && one.Points2 != 0)
+                {
+                    <td class="col-md-2">Bodova: @one.Points1</td>
+                    <td class="col-md-2">Bodova: @one.Points2</td>
+                }
+                <td class="col-md-2">Vrijeme: @one.Time</td>
+                <td class="col-md-2">@one.Length</td>
+            </tr>
+        }
+    </table>
+</div>
+
+

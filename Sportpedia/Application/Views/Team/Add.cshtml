@@ -32,8 +32,12 @@
                     <td>@Html.TextBoxFor(m => m.Team.Country, new { @class = "form-control" })</td>
                 </tr>
                 <tr>
-                    <td class="col-md-2">Ime stadiona:</td>
-                    <td>@Html.TextBoxFor(m => m.Team.Stadium, new { @class = "form-control" })</td>
+                    <td class="col-md-2">Stadioni/borilišta:</td>
+                    <td>@Html.ListBoxFor(m => m.Stadiums, ((System.ComponentModel.BindingList<EFDatabase.Stadium>) ViewBag.Stadioni).OrderBy(d => d.Name).Select(d => new SelectListItem {Text = d.Name, Value = d.ID.ToString()}), new {@class = "form-control"})</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>@Html.ActionLink("Dodaj novo borilište", "Add", "Stadium", null, new { @class = "btn btn-default" })</td>
                 </tr>
                 <tr>
                     <td class="col-md-2">Ime navijača kluba:</td>

@@ -127,14 +127,18 @@
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\SportController.cs" />
+    <Compile Include="Controllers\StadiumController.cs" />
     <Compile Include="Controllers\TeamController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CompetitionViewModel.cs" />
+    <Compile Include="Models\CupViewModel.cs" />
     <Compile Include="Models\DeserializedModel.cs" />
     <Compile Include="Models\EventModel.cs" />
+    <Compile Include="Models\LeagueViewModel.cs" />
+    <Compile Include="Models\MatchViewModel.cs" />
     <Compile Include="Models\RoundViewModel.cs" />
     <Compile Include="Models\SingleCompetitionModel.cs" />
     <Compile Include="Models\SingleMatchModel.cs" />
@@ -143,6 +147,7 @@
     <Compile Include="Models\SingleTeamModel.cs" />
     <Compile Include="Models\SportListView.cs" />
     <Compile Include="Models\SportViewModel.cs" />
+    <Compile Include="Models\StadiumModel.cs" />
     <Compile Include="Models\TeamListView.cs" />
     <Compile Include="Models\TeamPlayer.cs" />
     <Compile Include="Models\UserViewModel.cs" />
@@ -152,6 +157,7 @@
     <Compile Include="Services\Event_services.cs" />
     <Compile Include="Services\Player_services.cs" />
     <Compile Include="Services\Sport_services.cs" />
+    <Compile Include="Services\Stadium_services.cs" />
     <Compile Include="Services\Team_services.cs" />
     <Compile Include="Services\User_services.cs" />
   </ItemGroup>
@@ -178,6 +184,10 @@
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -215,6 +225,11 @@
     <Content Include="Views\CompetitionType\Add.cshtml" />
     <Content Include="Views\Competition\Round.cshtml" />
     <Content Include="Views\Competition\AddMatch.cshtml" />
+    <Content Include="Views\Competition\ViewMatch.cshtml" />
+    <Content Include="Views\Competition\Table.cshtml" />
+    <Content Include="Views\Competition\Cup.cshtml" />
+    <Content Include="Views\Stadium\Add.cshtml" />
+    <Content Include="Views\Stadium\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Database\EFDatabase.csproj">

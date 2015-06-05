@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Application.Models;
 using Application.Services;
 using EFDatabase;
 using Newtonsoft.Json;
 
 namespace Application.Controllers
 {
-    public class CompetitionTypeController : Controller
+    public class StadiumController : Controller
     {
         public string Logged_username()
         {
@@ -25,7 +27,7 @@ namespace Application.Controllers
             return user.Permissions.Name;
         }
         [HttpGet]
-        public ActionResult Add(string greska)
+        public ActionResult Add(string greska = "")
         {
             if (Request.Cookies["user"] == null)
             {
@@ -36,27 +38,24 @@ namespace Application.Controllers
             TempData["Greska"] = greska;
             return View();
         }
-
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Add(Type_of_competition model)
+        public ActionResult Add(StadiumModel model)
         {
             if (Request.Cookies["user"] == null)
             {
                 return RedirectToAction("Login", "User");
             }
             string username = Logged_username();
-            var dal = new CompetitionType_services();
-            if (model.Type_name == null)
-            {
-                return RedirectToAction("Add", new { greska = "Unesite ime tipa natjecanja!" });
-            }
-            if (dal.Check_existing(model.Type_name) != null)
-            {
-                return RedirectToAction("Add", new { greska = "Tip natjecanja već postoji!" });
-            }
-            dal.New_event(model);
-            return RedirectToAction("Add", "Competition");
+            var dal = new Stadium_services();
+            MemoryStream target = new MemoryStream();
+            model.Image.InputStream.CopyTo(target);
+            model.Stadium.Picture = target.ToArray();
+            dal.New_stadium(model.Stadium, username);
+            return RedirectToAction("Add", "Team");
         }
+        /*public ActionResult Index()
+        {
+            return View();
+        }*/
     }
 }

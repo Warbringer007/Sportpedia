@@ -36,7 +36,7 @@ namespace Application.Services
         {
             using (var ctx = new Context())
             {
-                return ctx.Teams.Include("Sport").Include("User").Include("Team_comments").Include("Team_players").Include("Team_players.Player").Include("Team_comments.User").FirstOrDefault(t => t.ID == id);
+                return ctx.Teams.Include("Stadiums").Include("Sport").Include("User").Include("Team_comments").Include("Team_players").Include("Team_players.Player").Include("Team_comments.User").FirstOrDefault(t => t.ID == id);
             }
         }
 
@@ -49,7 +49,6 @@ namespace Application.Services
                 team.Country = model.Team.Country;
                 team.Fans_Name = model.Team.Fans_Name;
                 team.Founded = model.Team.Founded;
-                team.Stadium = model.Team.Stadium;
                 team.Emblem = model.Team.Emblem;
                 team.Webpage = model.Team.Webpage;
                 team.Sport = ctx.Sports.FirstOrDefault(u => u.ID == model.Team.Sport.ID);
@@ -67,6 +66,16 @@ namespace Application.Services
                     commentDB.User = ctx.Users.FirstOrDefault(u => u.Username == username);
                     ctx.Team_comments.Add(commentDB);
                     ctx.SaveChanges();
+                }
+
+                if (model.Stadiums != null)
+                {
+                    foreach (var one in model.Stadiums)
+                    {
+                        Stadium stadium = ctx.Stadiums.FirstOrDefault(m => m.ID == one);
+                        stadium.Team = team;
+                        ctx.SaveChanges();
+                    }
                 }
             }
         }
@@ -104,7 +113,7 @@ namespace Application.Services
                 team.Country = model.Team.Country;
                 team.Fans_Name = model.Team.Fans_Name;
                 team.Founded = model.Team.Founded;
-                team.Stadium = model.Team.Stadium;
+                //team.Stadium = model.Team.Stadium;
                 if ( model.Team.Emblem != null ) team.Emblem = model.Team.Emblem;
                 team.Webpage = model.Team.Webpage;
                 ctx.SaveChanges();
@@ -115,7 +124,7 @@ namespace Application.Services
         {
             using (var ctx = new Context())
             {
-                return new BindingList<Player>(ctx.Players.Where(m => m.Sport.Name == sport.Name).ToList());
+                return new BindingList<Player>(ctx.Players.Where(m => m.Sport.Name == sport.Name && m.Play_in_team.Count == 0).ToList());
             }
         }
 
@@ -151,6 +160,14 @@ namespace Application.Services
                     }
                 }
                 return players;
+            }
+        }
+
+        public BindingList<Stadium> Stadioni()
+        {
+            using (var ctx = new Context())
+            {
+                return new BindingList<Stadium>(ctx.Stadiums.Where(m => m.Team == null).ToList());
             }
         }
     }

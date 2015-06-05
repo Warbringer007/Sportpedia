@@ -4,6 +4,76 @@
         font-weight: bold;
         text-shadow: 1px 1px 1px #FFFFFF;
     }
+    .navbar-custom {
+        background-color: #0a9226;
+        border-color: #20a753;
+    }
+    .navbar-custom .navbar-brand {
+        color: #ffffff;
+    }
+    .navbar-custom .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+        color: #20a753;
+    }
+    .navbar-custom .navbar-text {
+        color: #ffffff;
+    }
+    .navbar-custom .navbar-nav > li > a {
+        color: #ffffff;
+    }
+    .navbar-custom .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+        color: #20a753;
+    }
+    .navbar-custom .navbar-nav > li > .dropdown-menu {
+        background-color: #0a9226;
+    }
+    .navbar-custom .navbar-nav > li > .dropdown-menu > li > a {
+        color: #ffffff;
+    }
+    .navbar-custom .navbar-nav > li > .dropdown-menu > li > a:hover, .navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus {
+        color: #f6f6f6;
+        background-color: #20a753;
+    }
+    .navbar-custom .navbar-nav > li > .dropdown-menu > li > .divider {
+        background-color: #0a9226;
+    }
+    .navbar-custom .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+        color: #f6f6f6;
+        background-color: #20a753;
+    }
+    .navbar-custom .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+        color: #f6f6f6;
+        background-color: #20a753;
+    }
+    .navbar-custom .navbar-toggle {
+        border-color: #20a753;
+    }
+    .navbar-custom .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+        background-color: #20a753;
+    }
+    .navbar-custom .navbar-toggle .icon-bar {
+        background-color: #ffffff;
+    }
+    .navbar-custom .navbar-collapse, .navbar-default .navbar-form {
+        border-color: #ffffff;
+    }
+    .navbar-custom .navbar-link {
+        color: #ffffff;
+    }
+    .navbar-custom .navbar-link:hover {
+        color: #20a753;
+    }
+    @@media (max-width: 767px) {
+      .navbar-custom .navbar-nav .open .dropdown-menu > li > a {
+        color: #ffffff;
+      }
+      .navbar-custom .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #f6f6f6;
+      }
+      .navbar-custom .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+        color: #f6f6f6;
+        background-color: #20a753;
+      }
+    }
 </style>
 <html>
 <head>
@@ -12,11 +82,12 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script src="~/Scripts/knockout-3.3.0.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
 </head>
 <body>
     @if (Request.Cookies["user"] != null)
     {
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-custom navbar-fixed-top">
         <div class="container">
             
             <div class="navbar-collapse collapse">

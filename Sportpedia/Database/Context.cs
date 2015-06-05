@@ -27,6 +27,7 @@ namespace EFDatabase
         public virtual DbSet<Event_list> Event_list { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Contestant> Contestants { get; set; }
+        public virtual DbSet<Stadium> Stadiums { get; set; }
         public virtual DbSet<Competition_contestant> Competition_contestants { get; set; }
         public virtual DbSet<Competition_comment> Competition_comments { get; set; }
         public virtual DbSet<Competition> Competitions { get; set; }
