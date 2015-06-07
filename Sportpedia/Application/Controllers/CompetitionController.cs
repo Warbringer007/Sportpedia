@@ -237,6 +237,7 @@ namespace Application.Controllers
             LeagueViewModel model = new LeagueViewModel();
             model.Rounds = new List<RoundViewModel>();
             model.Standings = new List<Standing>();
+            model.Competition = current.ID;
             foreach (var one in current.Competition_contestants)
             {
                 Standing TeamStanding = new Standing();

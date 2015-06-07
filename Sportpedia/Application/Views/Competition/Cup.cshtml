@@ -60,23 +60,64 @@
                     <td style="outline: 1px solid #aaa; text-align: center; background-color: lightgray">
                         <b>@currentMatch.HomePoints</b>
                     </td>
+                    @if ((y % 2 == 1))
+                    {
+                        <td style="border-bottom-style: solid; border-top-style: none; border-left-style: none; border-right-style: solid; border-color: black"></td>
+                    }  
                 </tr>
                 <tr>
                     <td style="outline: 1px solid #aaa; text-align: center; background-color: lightgray">
                         <b>@currentMatch.AwayPoints</b>
                     </td>
+                    @if ((y % 2 == 0) && (Model.Matches.Count + 1) / (int)Math.Pow(2, x + 1) > 1)
+                    {
+                        <td style="border-bottom-style: none; border-top-style: solid; border-left-style: none; border-right-style: solid; border-color: black"></td>
+                    }
                 </tr>
                 if (y + 1 < (Model.Matches.Count + 1) / (int)Math.Pow(2, x + 1))
                 {
-                    for (int z = 0; z < (((int)Math.Pow(2, x) - 1) * 2 + 1); z++)
+                    for (int z = 0; z < (((int)Math.Pow(2, x) - 1)); z++)
                     {
                         <tr>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
+                            <td style="border-bottom-style: none; border-top-style: none; border-left-style: none; border-right-style: solid; border-color: black"></td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
+                            <td style="border-bottom-style: none; border-top-style: none; border-left-style: none; border-right-style: solid; border-color: black"></td>
+                        </tr>
+                    }
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        @if ((y % 2) == 0)
+                        {
+                            <td style="border-bottom-style: none; border-top-style: none; border-left-style: none; border-right-style: solid; border-color: black"></td>
+                            <td style="border-bottom-style: solid; border-top-style: none; border-left-style: solid; border-right-style: none; border-color: black"></td>
+                        }        
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        @if ((y % 2) == 0)
+                        {
+                            <td style="border-bottom-style: none; border-top-style: none; border-left-style: none; border-right-style: solid; border-color: black"></td>
+                            <td style="border-bottom-style: none; border-top-style: solid; border-left-style: solid; border-right-style: none; border-color: black"></td>
+                        }               
+                    </tr>
+                    for (int z = 0; z < (((int)Math.Pow(2, x) - 1)); z++)
+                    {
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td style="border-bottom-style: none; border-top-style: none; border-left-style: none; border-right-style: solid; border-color: black"></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td style="border-bottom-style: none; border-top-style: none; border-left-style: none; border-right-style: solid; border-color: black"></td>
                         </tr>
                     }
                 }

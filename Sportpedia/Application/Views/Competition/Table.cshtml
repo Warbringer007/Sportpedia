@@ -36,4 +36,31 @@
     </table>
 </div>
 <h2>Raspored utakmica:</h2>
+<div class="container">
+    <table class="table-responsive table-condensed col-md-12" style="margin-bottom: 5px; margin-top: 10px">
+        @foreach (RoundViewModel round in Model.Rounds)
+        {
+            <tr>
+                <td class="col-md-9" colspan="3" style="text-align: center; font-size: large"><b>@Html.ActionLink(@round.Round + ". kolo", "Round", new { competition = Model.Competition, kolo = round.Round })</b></td>
+            </tr>
+            foreach (SingleMatchModel match in round.matches)
+            {
+                <tr>
+                    <td class="col-md-3" style="text-align: center">@match.HomeContestant</td>
+                    <td class="col-md-3" style="text-align: center">@match.HomePoints : @match.AwayPoints</td>
+                    <td class="col-md-3" style="text-align: center">@match.AwayContestant</td>
+                    @if (match.Match.Locked)
+                    {
+                        <td class="col-md-3">@Html.ActionLink("Pogledaj podatke o meču", "ViewMatch", new {id = match.Match.ID})</td>
+                    }
+                    else
+                    {
+                        <td class="col-md-3">@Html.ActionLink("Uredi podatke o meču", "AddMatch", new { id = match.Match.ID })</td>
+                    }
+                </tr>
+            }
+            <tr>&nbsp;</tr>
+        }
+    </table>
+</div>
 

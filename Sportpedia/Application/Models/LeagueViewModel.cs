@@ -22,5 +22,6 @@ namespace Application.Models
     {
         public List<RoundViewModel> Rounds { get; set; }
         public List<Standing> Standings { get; set; }
+        public int Competition { get; set; }
     }
 }
